@@ -16,7 +16,7 @@ system.
 
 **Example:**
 
-$$$$\begin{array}{|l|c|c|}
+$$\begin{array}{|l|c|c|}
 \hline
  \text{} & \textbf{Height (m)} & \textbf{Weight (kg)}\\
  \hline
@@ -24,7 +24,7 @@ $$$$\begin{array}{|l|c|c|}
 \hline
 \text{person 2} & 1.67 & 67.1\\
 \hline
- \text{...} & \text{...} & \text{...}  \end{array} $$$$
+ \text{...} & \text{...} & \text{...}  \end{array} $$
 
 
 | sample  |      Height (m)     |  Weight (kg) |
