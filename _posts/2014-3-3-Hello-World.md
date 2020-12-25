@@ -99,7 +99,7 @@ As the covariance matrix is symmetric, $$x^t x = (x^t x)^t$$, it can always be d
 $$E[x^t x] \simeq \frac{1}{n-1} X^t X = P^t D P$$
 
 The change of basis matrix, $$P$$, satisfies $$P^t P =\mathbb{I}$$, thus it is a matrix representation of the
- orthogonal group $O(m)$, this is the group of rotations, reflexions and combinations of them. Due to this, we can see 
+ orthogonal group $$O(m)$$, this is the group of rotations, reflexions and combinations of them. Due to this, we can see 
  the matrix as a rotation in a m dimensional space from the dataset coordinates (variables) into a new system of
   coordinates in which the coordinates are <span style="color:red">linearly</span> independent.
   
@@ -113,7 +113,7 @@ The change of basis matrix, $$P$$, satisfies $$P^t P =\mathbb{I}$$, thus it is a
    
 <center>
 <figure>
-  <img src="{{ site.baseurl }}/images/post_0/pca_examples.jpg" >
+  <img src="{{ site.baseurl }}/images/post_0/pca_example.jpg" >
   <figcaption>
   Figure 2: Scheme of the resulting PCA components of two correlated variables (weight and height).
   </figcaption>
@@ -130,11 +130,13 @@ mean that the would be more useful in every problem. In our example of Fig. 2, t
  negligible in comparison with the second component for predicting obesity.
  
  
- ## Understanding Ridge regression
+## Understanding Ridge regression
  
  The understanding of PCA will help us to gain a deeper knowledge of the Ridge regression. The Ridge regression is
   just a linear model:
-  $$ y = x \cdot w + \epsilon;\;\;\; \epsilon \sim \mathcal{N}(0, \sigma), tag{3} \label{ridge_loss}$$
+  
+  $$ y = x \cdot w + \epsilon;\;\;\; \epsilon \sim \mathcal{N}(0, \sigma), \tag{3} \label{ridge_loss}$$
+  
  where $$\epsilon$$ is the noise and $$w_{m \times 1}$$ the weights associated to the m variables $$x_{1 \times m}$$. 
  In the standard linear regression these weights are usually estimated using the least squares estimator. In the case of
  Ridge regression they are estimated using the same estimator but the possibility of having high valued weights is
@@ -145,9 +147,10 @@ mean that the would be more useful in every problem. In our example of Fig. 2, t
   
  Optimizing for $$w$$, we can reach an analytical expression for the best weights estimate:
  
- $$w = \left(\frac{X^t X}{n} + \lambda \mathbb{I})^{-1}\frac{X^tY}{n} =
-  \left((n-1) \Sigma + \lambda n \mathbb{I})^{-1} X^t Y, \tag{4} \label{w_analytical}$$
- where $\Sigma$ is the covariance matrix defined in (\ref{covariance}).
+ $$w = \left(\frac{X^t X}{n} + \lambda \mathbb{I}\right)^{-1}\frac{X^tY}{n} =
+  \left((n-1) \Sigma + \lambda n \mathbb{I}\right)^{-1} X^t Y, \tag{4} \label{w_analytical}$$
+  
+ where $$\Sigma$$ is the covariance matrix defined in (\ref{covariance}).
  
  The Ridge regression has two main use cases:
  
@@ -162,9 +165,11 @@ mean that the would be more useful in every problem. In our example of Fig. 2, t
 
 
 Concerning colinearity, let us discuss this problem with a two variable example. Assume that we have by error include 
-a copy of a variable $x_2 = x_1$ in the dataset. If $x_2$ were not there, the estimation of $$w_1$$ would have been 
+a copy of a variable $$x_2 = x_1$$ in the dataset. If $$x_2$$ were not there, the estimation of $$w_1$$ would have been 
 $$w_1^*$$. However, as we have a copy of $$x_1$$ in the dataset we have a degeneracy,
+
 $$ (w_1^* - \alpha) x_1 + alpha x_2;\;\;\;alpha \in \mathbb{R},$$  
+
 i.e. for any value of $$\alpha$$ we have an optimal set of different weights. The inference results would be as good for
 any $$\alpha$$ value, thus instead of having a single best solution now we have a continuous. Where is the problem then? 
 Notice that due to this issue the covariance matrix is degenerate and we cannot obtain its inverse, there is not a 
