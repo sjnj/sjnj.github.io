@@ -16,14 +16,18 @@ system.
 
 **Example:**
 
+<center>
+
 | sample  |      Height (m)     |  Weight (kg) |
 |----------|:-------------:|:------:|
 | person 1|  1.90 | 100.5 |
 | person 2 |    1.67   |   67.1 |
 | ... | ... |  ... |
 
-$$x_1 = \text{Height},\;\;\;x_2 = \text{Weight},\;\;\;x = [\text{Height}, \text{Weight}]$$.
-    
+</center>
+
+
+$$x_1 = \text{Height},\;\;\;x_2 = \text{Weight},\;\;\;x = [\text{Height}, \text{Weight}]$$
 
 $$X_{12} = 100.5,\;\;\;X = [[1.90, 100.5],\;[1.67, 67.1],\;...]$$
 
