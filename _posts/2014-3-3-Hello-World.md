@@ -16,15 +16,18 @@ system.
 
 **Example:**
 
-<center>
+$$$$\begin{array}{|l|c|c|}
+ \textbf{sample}&\textbf{Height (m)}&\textbf{Weight (kg)}\\
+ \hline\\
+\text{person 1}&1.90&100.5\\
+\text{person 2}&1.67&67.1\\
+ \text{...}&\text{...}&\text{...}\\ 
+  \end{array} $$$$
 
-| sample  |      Height (m)     |  Weight (kg) |
-|----------|:-------------:|:------:|
-| person 1|  1.90 | 100.5 |
-| person 2 |    1.67   |   67.1 |
-| ... | ... |  ... |
 
-</center>
+
+
+
 
 
 $$x_1 = \text{Height},\;\;\;x_2 = \text{Weight},\;\;\;x = [\text{Height}, \text{Weight}]$$
