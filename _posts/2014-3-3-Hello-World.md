@@ -17,14 +17,21 @@ system.
 **Example:**
 
 $$$$\begin{array}{|l|c|c|}
- \text{sample}&\text{Height (m)}&\text{Weight (kg)}\\
-\text{person 1}&1.90&100.5\\
-\text{person 2}&1.67&67.1\\
- \text{...}&\text{...}&\text{...}\\ 
-  \end{array} $$$$
+\hline
+ \text{} & \textbf{Height (m)} & \textbf{Weight (kg)}\\
+ \hline
+\text{person 1} & 1.90 & 100.5\\
+\hline
+\text{person 2} & 1.67 & 67.1\\
+\hline
+ \text{...} & \text{...} & \text{...}  \end{array} $$$$
 
 
-
+| sample  |      Height (m)     |  Weight (kg) |
+|----------|:-------------:|:------:|
+| person 1|  1.90 | 100.5 |
+| person 2 |    1.67   |   67.1 |
+| ... | ... |  ... |
 
 
 
