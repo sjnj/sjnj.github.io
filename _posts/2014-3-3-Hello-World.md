@@ -27,14 +27,6 @@ $$\begin{array}{|l|c|c|}
  \text{...} & \text{...} & \text{...}  \end{array} $$
 
 
-| sample  |      Height (m)     |  Weight (kg) |
-|----------|:-------------:|:------:|
-| person 1|  1.90 | 100.5 |
-| person 2 |    1.67   |   67.1 |
-| ... | ... |  ... |
-
-
-
 
 $$x_1 = \text{Height},\;\;\;x_2 = \text{Weight},\;\;\;x = [\text{Height}, \text{Weight}]$$
 
@@ -69,15 +61,26 @@ E[x_2 x_1] & 1 & \cdots \\
 
 We can quickly gain familiarity with what the covariance matrix represent by studying extreme cases:
 
-* $$\bf{x_2 = \pm x_1}$$ **:** Suppose that we have include a copy of the x_1 up to a sign in the dataset without relalising. In that case, $$E[x_2 x_1] = \pm E[x_1^2] = \pm 1$$. Notice how this maximum is fixed thanks to condition (\ref{cond2}); for example, if we had the same variables in different units (say $$[x_1]=m$$ and $$[x_2] = km$$),  the result would be $$E[x_1 x_2] = 0.001 \cdot E[x_1^{\small normalized} x_2^{\small normalized}] = 0.001$$
+* $$\bf{x_2 = \pm x_1}$$ **:** Suppose that we have include a copy of the $$x_1$$ up to a sign in the dataset without
+ relalising. In that case, $$E[x_2 x_1] = \pm E[x_1^2] = \pm 1$$. Notice how this maximum is fixed thanks to condition 
+ (\ref{cond2}); for example, if we had the same variables in different units
+  (say $$[x_1]=m$$ and $$[x_2] = km$$),  the result would be
+   $$E[x_1 x_2] = 0.001 \cdot E[x_1^{\small normalized} x_2^{\small normalized}] = 0.001$$
 
-* $$\bf{x_2 \perp x_1}$$**:** if x_2 is independent of x_1, whatever the value of x_2 we have x_1 will follow the same distribution, i.e. $$E[x_1x_2] = E[x_1\vert x2] E[x_2] = E[x_1]E[x_2] = 0$$. Notice how this minimum is set to zero thanks to condition (\ref{cond1}).
+* $$\bf{x_2 \perp x_1}$$**:** if x_2 is independent of $$x_1$$, whatever the value of $$x_2$$, $$x_1$$ will follow the
+ same distribution, i.e. $$E[x_1x_2] = E[x_1\vert x2] E[x_2] = E[x_1]E[x_2] = 0$$. Notice how this minimum is set to
+  zero thanks to condition (\ref{cond1}).
 
-Thus, the off-diagonal elements give us a score of the <span style='color:red;'> linear</span> dependency between each pair of variables. If $$\vert E[x_2 x_1] \vert \simeq 1$$ ,they are highly correlated. On the other hand, if $$ E[x_2 x_1]  \simeq 0$$, they are <span style='color:red;'> linearly</span> independent. Notice that linearly independent does not mean indpendent, see how the varibles of Fig. has  $$ E[x_2 x_1]  \simeq 0$$, however if $$x_1=0$$ we are pretty sure that $$\vert E[x_2\vert x_1=0] \vert = r$$.
+Thus, the off-diagonal elements give us a score of the <span style='color:red;'> linear</span> dependency between each 
+pair of variables. If $$\vert E[x_2 x_1] \vert \simeq 1$$ ,they are highly correlated. On the other hand,
+ if $$ E[x_2 x_1]  \simeq 0$$, they are <span style='color:red;'> linearly</span> independent.
+  Notice that linearly independent does not mean indpendent, see how the varibles of Fig. 1 has 
+   $$ E[x_2 x_1]  \simeq 0$$, however if $$x_1=0$$ we are pretty sure that $$\vert E[x_2\vert x_1=0] \vert = r$$.
 
-![Figure 1: Example of non correlated but dependent variables.]({{ site.baseurl }}/images/post_0/correlation0.jpg)
-
-   
+.center[
+![_config.yml]({{ site.baseurl }}/images/post_0/correlation0.jpg)
+.caption[Figure 1: Example of non correlated but dependent variables.]
+ ]  
 
 
 
