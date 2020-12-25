@@ -9,9 +9,12 @@ system.
 
 ### Notation:
   
-  * $$x \in \mathbb{R}^m =  [ x_1,...,x_m]$$ is a random variable that represents all the studied features.  $$x_i$$ corresponds to a single feature, the ith coordinate of $$x$$.
+  * $$x \in \mathbb{R}^m =  [ x_1,...,x_m]$$ is a random variable that represents all the studied features.
+    $$x_i$$ corresponds to a single feature, the ith coordinate of $$x$$.
 
-  * $$X_{n \times m}$$ is a matrix that contains the samples of our dataset.  Thus, $$X_{ij}$$ correponds to the meassured value of the jth variable for the ith sample from the population studied.
+  * $$X_{n \times m}$$ is a matrix that contains the samples of our dataset. 
+   Thus, $$X_{ij}$$ correponds to the meassured value of the jth variable for the ith sample
+   from the population studied.
   
 
 **Example:**
@@ -38,15 +41,16 @@ $$X_{12} = 100.5,\;\;\;X = [[1.90, 100.5],\;[1.67, 67.1],\;...]$$
 
 Let us assume that the variables satisfy:
 
-* $$E[x_i] = 0;\;\; \forall i \tag{1} \label{cond1}$$
+$$E[x_i] = 0;\;\; \forall i \tag{1} \label{cond1}$$
 
-* $$Var[x_i] \equiv E[(x_i - E[x_i])^2] = E[x_i^2] = 1;\;\; \forall i  \tag{2} \label{cond2}$$
+$$Var[x_i] \equiv E[(x_i - E[x_i])^2] = E[x_i^2] = 1;\;\; \forall i  \tag{2} \label{cond2}$$
 
 We can always find a transformation such that those conditions are approximately satisfy:
 
 $$ x_i \longrightarrow \frac{x_i - \overline{x}_i}{\sigma_i};$$
 
-$$\overline{x}_i  = \frac{1}{n}  \sum_{j=1}^{n} X_{ji};\;\;\;\; \sigma^2_i  = \frac{1}{n-1}  \sum_{j=1}^{n} \left(X_{ji}-\overline{x}_i \right)^2$$
+$$\overline{x}_i  = \frac{1}{n}  \sum_{j=1}^{n} X_{ji};\;\;\;\; \sigma^2_i  
+= \frac{1}{n-1}  \sum_{j=1}^{n} \left(X_{ji}-\overline{x}_i \right)^2$$
 
 
 The covariance matrix reads:
@@ -62,7 +66,7 @@ E[x_2 x_1] & 1 & \cdots \\
 We can quickly gain familiarity with what the covariance matrix represent by studying extreme cases:
 
 * $$\bf{x_2 = \pm x_1}$$ **:** Suppose that we have include a copy of the $$x_1$$ up to a sign in the dataset without
- relalising. In that case, $$E[x_2 x_1] = \pm E[x_1^2] = \pm 1$$. Notice how this maximum is fixed thanks to condition 
+ realising. In that case, $$E[x_2 x_1] = \pm E[x_1^2] = \pm 1$$. Notice how this maximum is fixed thanks to condition 
  (\ref{cond2}); for example, if we had the same variables in different units
   (say $$[x_1]=m$$ and $$[x_2] = km$$),  the result would be
    $$E[x_1 x_2] = 0.001 \cdot E[x_1^{\small normalized} x_2^{\small normalized}] = 0.001$$
@@ -74,8 +78,9 @@ We can quickly gain familiarity with what the covariance matrix represent by stu
 Thus, the off-diagonal elements give us a score of the <span style='color:red;'> linear</span> dependency between each 
 pair of variables. If $$\vert E[x_2 x_1] \vert \simeq 1$$ ,they are highly correlated. On the other hand,
  if $$ E[x_2 x_1]  \simeq 0$$, they are <span style='color:red;'> linearly</span> independent.
-  Notice that linearly independent does not mean indpendent, see how the varibles of Fig. 1 has 
-   $$ E[x_2 x_1]  \simeq 0$$, however if $$x_1=0$$ we are pretty sure that $$\vert E[x_2\vert x_1=0] \vert = r$$.
+  Notice that linearly independent does not mean independent, see how the variables of Fig. 1 has 
+   $$ E[x_2 x_1]  \simeq 0$$, but they are entangled: $$ E[\vert x_2\vert \;\vert x_1=0] = r$$ or
+    $$ E[\vert x_2\vert \;\vert x_1=\pm r] = 0$$.
 
 <center>
 <figure>
@@ -83,6 +88,126 @@ pair of variables. If $$\vert E[x_2 x_1] \vert \simeq 1$$ ,they are highly corre
   <figcaption>Figure 1: Example of two dependent variables with 0 linear correlation. </figcaption>
 </figure>
 </center>
+
+
+We can estimate the covariance matrix from our sample using:
+
+$$Var[x] = E[x^t x] \simeq \frac{1}{n-1} X^t X \equiv \Sigma_{m \times m} \tag{3} \label{covariance}$$
+
+As the covariance matrix is symmetric, $$x^t x = (x^t x)^t$$, it can always be diagonalised:
+
+$$E[x^t x] \simeq \frac{1}{n-1} X^t X = P^t D P$$
+
+The change of basis matrix, $$P$$, satisfies $$P^t P =\mathbb{I}$$, thus it is a matrix representation of the
+ orthogonal group $O(m)$, this is the group of rotations, reflexions and combinations of them. Due to this, we can see 
+ the matrix as a rotation in a m dimensional space from the dataset coordinates (variables) into a new system of
+  coordinates in which the coordinates are <span style="color:red">linearly</span> independent.
+  
+ $$ P(P^t D P)P^t = E[ P x^t x P^t ] \Rightarrow D = E[ (x P^t)^t (x P^t) ] = E[ \tilde{x}^t \tilde{x}]$$ 
+ 
+ In the new coordinates (variables), $$\tilde{x}$$, the covariance matrix is diagonal. This transformation is usually 
+ called Principal Components Analysis (PCA). In order to understand what happens when this transformation is done,
+  let us consider as an example the same dataset of the notation. Both weight and height are usually correlated, 
+  though not perfectly, see Fig. 2. The old axis are rotated such that the first principal component
+   captures that linear correlation.
+   
+<center>
+<figure>
+  <img src="{{ site.baseurl }}/images/post_0/pca_examples.jpg" >
+  <figcaption>
+  Figure 2: Scheme of the resulting PCA components of two correlated variables (weight and height).
+  </figcaption>
+</figure>
+</center> 
+ 
+Ideally, the principal components with higher variance ($$D_{ii} \gg 1$$) aggreagate or represent hidden factors that 
+linearly correlates with many variables of the dataset, whereas those with a small variance ($$D_{ii} \ll 1$$) 
+would be associated to noise.
+
+Finally, notice that higher variance variables just summarize more information of the dataset, but that does not 
+mean that the would be more useful in every problem. In our example of Fig. 2, the first component may represent well
+ how big is a person and would be the most useful if we want to predict the length of a person arm, however it would be
+ negligible in comparison with the second component for predicting obesity.
+ 
+ 
+ ## Understanding Ridge regression
+ 
+ The understanding of PCA will help us to gain a deeper knowledge of the Ridge regression. The Ridge regression is
+  just a linear model:
+  $$ y = x \cdot w + \epsilon;\;\;\; \epsilon \sim \mathcal{N}(0, \sigma), tag{3} \label{ridge_loss}$$
+ where $$\epsilon$$ is the noise and $$w_{m \times 1}$$ the weights associated to the m variables $$x_{1 \times m}$$. 
+ In the standard linear regression these weights are usually estimated using the least squares estimator. In the case of
+ Ridge regression they are estimated using the same estimator but the possibility of having high valued weights is
+ penalized with a square weight penalty,
+ 
+ $$\text{arg min}_w E_{(x,y)}[(y - x w)^2] + \lambda w^t w  \simeq
+  \frac{1}{n} \left(Y - X w\right)^t\left(Y - X w\right)+ \lambda w^t w $$
+  
+ Optimizing for $$w$$, we can reach an analytical expression for the best weights estimate:
+ 
+ $$w = \left(\frac{X^t X}{n} + \lambda \mathbb{I})^{-1}\frac{X^tY}{n} =
+  \left((n-1) \Sigma + \lambda n \mathbb{I})^{-1} X^t Y, \tag{4} \label{w_analytical}$$
+ where $\Sigma$ is the covariance matrix defined in (\ref{covariance}).
+ 
+ The Ridge regression has two main use cases:
+ 
+ * **Colinearity:** though colinearity of variables ($$E[x_i x_j] \simeq 1$$ for some i,j) is not a problem for inference 
+ as we will see soon, it is a problem for numerical methods convergence. The $$l_2$$ regularization can fix that as it 
+ adds $$\lambda$$ to the null eigenvalues of $$X^tX$$ alleviating the inverse computation at (\ref{w_analytical}). 
+ However, as we will see soon this method must not be used for causal inference as it induces a bias of evenly balancing 
+ the weights of collinear variables.
+ 
+ * **Selection of variables:** thanks to a PCA rotation we will understand in which way we can expect the $$l_2$$
+  regularization to help suppressing the noise influence in the regression.
+
+
+Concerning colinearity, let us discuss this problem with a two variable example. Assume that we have by error include 
+a copy of a variable $x_2 = x_1$ in the dataset. If $x_2$ were not there, the estimation of $$w_1$$ would have been 
+$$w_1^*$$. However, as we have a copy of $$x_1$$ in the dataset we have a degeneracy,
+$$ (w_1^* - \alpha) x_1 + alpha x_2;\;\;\;alpha \in \mathbb{R},$$  
+i.e. for any value of $$\alpha$$ we have an optimal set of different weights. The inference results would be as good for
+any $$\alpha$$ value, thus instead of having a single best solution now we have a continuous. Where is the problem then? 
+Notice that due to this issue the covariance matrix is degenerate and we cannot obtain its inverse, there is not a 
+single solution translates into  the non invertivility of the covariance matrix:
+
+$$ \Sigma = \left(\begin{array}{cc}
+1&1\\
+1&1
+\end{array} \right); \text{Det}\left(\Sigma\right) = 0.$$
+
+But, How can possibly regularization help with this? As it induces a new penalty increasing in circles from the origin,
+ it breaks the degeneracy of solutions and chooses that closer to the origin. A graphical representation of this can 
+ be seen in Fig. 3. In our example, the determinant is no longer 0:
+$$ \Sigma + \lambda \mathbb{I} = \left(\begin{array}{cc}
+1 + \lambda&1\\
+1&1+\lambda
+\end{array} \right); \text{Det}\left(\Sigma\right) = (1+lambda)^2 - 1 \neq 0 \text{ for } \lambda \neq 0.$$
+
+
+
+ 
+ Notice that this loss is invariant under O(m) transformations of the coordinates x as we can always absorb the matrix
+ with a redefinition of the weights:
+ $$ x \rightarrow \tilde{x} = x P^t; \;\;\; w \rightarrow \tilde{w} = P w;$$
+ 
+ $$E_{(x,y)}[(y - x P^t P w)^2] + \lambda w^t P^t P w = E_{(x,y)}[(y - (x P^t) (P w) )^2] + \lambda (P w)^t (P w) =
+ E_{(x,y)}[(y - \tilde{x}\tilde{w} )^2] + \lambda \tilde{w}^t\tilde{w}.$$
+ 
+ We can always
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+ 
+ The Principal Components Analysis (PCA) algorithm 
 
 
 Next you can update your site name, avatar and other options using the _config.yml file in the root of your repository (shown below).
