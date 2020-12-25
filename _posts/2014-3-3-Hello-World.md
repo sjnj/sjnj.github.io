@@ -9,9 +9,9 @@ system.
 
 **Notation:**
   
-  * $$x \in \mathbb{R}^m =  \[ x_1,...,x_m\]$$ is a random variable that represents all the studied features.  $$x_i$$ corresponds to a single feature, the ith coordinate of $$x$$.
+  * $$x \in \mathbb{R}^m =  [ x_1,...,x_m]$$ is a random variable that represents all the studied features.  $$x_i$$ corresponds to a single feature, the ith coordinate of $$x$$.
 
-  * $$X_{n \times m}$$ is a matrix that contains the samples of our dataset.  Thus, $$X_{i,j}$$ correponds to the meassured value of the jth variable for the ith sample from the population studied.
+  * $$X_{n \times m}$$ is a matrix that contains the samples of our dataset.  Thus, $$X_{ij}$$ correponds to the meassured value of the jth variable for the ith sample from the population studied.
 
 
 
