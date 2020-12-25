@@ -77,11 +77,12 @@ pair of variables. If $$\vert E[x_2 x_1] \vert \simeq 1$$ ,they are highly corre
   Notice that linearly independent does not mean indpendent, see how the varibles of Fig. 1 has 
    $$ E[x_2 x_1]  \simeq 0$$, however if $$x_1=0$$ we are pretty sure that $$\vert E[x_2\vert x_1=0] \vert = r$$.
 
-.center[
-![_config.yml]({{ site.baseurl }}/images/post_0/correlation0.jpg)
-.caption[Figure 1: Example of non correlated but dependent variables.]
- ]  
-
+<center>
+<figure>
+  <img src="{{ site.baseurl }}/images/post_0/correlation0.jpg" >
+  <figcaption>Figure 1: Example of two dependent variables with 0 linear correlation. </figcaption>
+</figure>
+</center>
 
 
 Next you can update your site name, avatar and other options using the _config.yml file in the root of your repository (shown below).
