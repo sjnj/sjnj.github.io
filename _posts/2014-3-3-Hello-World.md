@@ -71,7 +71,7 @@ We can quickly gain familiarity with what the covariance matrix represents by st
   (say $$[x_1]=m$$ and $$[x_2] = km$$),  the result would be
    $$E[x_1 x_2] = 0.001 \cdot E[x_1^{\small normalized} x_2^{\small normalized}] = 0.001$$
 
-* $$\bf{x_2 \perp x_1}$$**:** if x_2 is independent of $$x_1$$, whatever the value of $$x_2$$, $$x_1$$ follows the
+* $$\bf{x_2 \perp x_1}$$**:** if $$x_2$$ is independent of $$x_1$$, whatever the value of $$x_2$$, $$x_1$$ follows the
  same distribution, i.e. $$E[x_1x_2] = E[x_1\vert x2] E[x_2] = E[x_1]E[x_2] = 0$$. Notice how this minimum is set to
   zero thanks to condition (\ref{cond1}).
 
@@ -199,7 +199,7 @@ $$ \Sigma + \lambda \mathbb{I} = \left(\begin{array}{cc}
 </figure>
 </center> 
 
- Concerning the selection of variables, notice that this loss is invariant under O(m) transformations of
+ Concerning the selection of variables, notice that this loss is invariant under $$O(m)$$ transformations of
  the coordinates x as we can always absorb the matrix with a redefinition of the weights
   (scalar products of vectors are invariant under rotation and reflexions of the coordinate system):
   
@@ -242,18 +242,4 @@ $$ \Sigma + \lambda \mathbb{I} = \left(\begin{array}{cc}
 There is another way of understanding what does $$l_2$$ regularization from a Bayesian point of view,
  which is just an exponential prior on the weights $$w_i$$, 
 see [this lecture](https://www.youtube.com/watch?v=_21o_ylL0q4) for a nice discussion.
-  
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-
-
-
