@@ -206,12 +206,13 @@ $$ \Sigma + \lambda \mathbb{I} = \left(\begin{array}{cc}
  $$ x \rightarrow \tilde{x} = x P^t; \;\;\; w \rightarrow \tilde{w} = P w;$$
  
  $$E_{(x,y)}\left[(y - x P^t P w)^2 \right] + \lambda w^t P^t P w = E_{(x,y)}\left[(y - (x P^t) (P w) )^2 \right] 
- + \lambda (P w)^t (P w) = E_{(x,y)}\left[(y - \tilde{x}\tilde{w} )^2\right] + \lambda \tilde{w}^t\tilde{w}. $$
+ + \lambda (P w)^t (P w) \\ 
+ = E_{(x,y)}\left[(y - \tilde{x}\tilde{w} )^2\right] + \lambda \tilde{w}^t\tilde{w}. $$
  
  If we choose $$P$$ to be that of PCA, as the new variables $$\tilde{x}$$ are linearly independent
  the covariance matrix is diagonal, thus (\ref{w_analytical}) can be written as:
  
- $$ \tilde{w}_i = \frac{1}{(n-1)D_{ii} + \lambda n}\tilde{X}^tY} \tag{5} \label{aux1}$$
+ $$ \tilde{w}_i = \frac{1}{(n-1)D_{ii} + \lambda n}\tilde{X}^tY \tag{5} \label{aux1}$$
  
  Due to that linear independency we can also rewrite the numerator as,
  
