@@ -84,7 +84,7 @@ pair of variables. If $$\vert E[x_2 x_1] \vert \simeq 1$$ ,they are highly corre
 
 <center>
 <figure>
-  <img src="{{ site.baseurl }}/images/post_0/correlation0.jpg" >
+  <img src="{{ site.baseurl }}/images/post0/correlation0.jpg" >
   <figcaption>Figure 1: Example of two dependent variables with 0 linear correlation. </figcaption>
 </figure>
 </center>
@@ -113,7 +113,7 @@ The change of basis matrix, $$P$$, satisfies $$P^t P =\mathbb{I}$$, thus it is a
    
 <center>
 <figure>
-  <img src="{{ site.baseurl }}/images/post_0/pca_example.jpg" >
+  <img src="{{ site.baseurl }}/images/post0/pca_example.jpg" >
   <figcaption>
   Figure 2: Scheme of the resulting PCA components of two correlated variables (weight and height).
   </figcaption>
@@ -154,7 +154,7 @@ mean that the would be more useful in every problem. In our example of Fig. 2, t
  
  The Ridge regression has two main use cases:
  
- * **Colinearity:** though colinearity of variables ($$E[x_i x_j] \simeq 1$$ for some i,j) is not a problem for inference 
+ * **Collinearity:** though collinearity of variables ($$E[x_i x_j] \simeq 1$$ for some i,j) is not a problem for inference 
  as we will see soon, it is a problem for numerical methods convergence. The $$l_2$$ regularization can fix that as it 
  adds $$\lambda$$ to the null eigenvalues of $$X^tX$$ alleviating the inverse computation at (\ref{w_analytical}). 
  However, as we will see soon this method must not be used for causal inference as it induces a bias of evenly balancing 
@@ -164,16 +164,16 @@ mean that the would be more useful in every problem. In our example of Fig. 2, t
   regularization to help suppressing the noise influence in the regression.
 
 
-Concerning colinearity, let us discuss this problem with a two variable example. Assume that we have by error include 
+Concerning collinearity, let us discuss this problem with a two variable example. Assume that we have by error include 
 a copy of a variable $$x_2 = x_1$$ in the dataset. If $$x_2$$ were not there, the estimation of $$w_1$$ would have been 
 $$w_1^*$$. However, as we have a copy of $$x_1$$ in the dataset we have a degeneracy,
 
-$$ (w_1^* - \alpha) x_1 + alpha x_2;\;\;\;alpha \in \mathbb{R},$$  
+$$ (w_1^* - \alpha) x_1 + \alpha x_2;\;\;\;\alpha \in \mathbb{R},$$  
 
 i.e. for any value of $$\alpha$$ we have an optimal set of different weights. The inference results would be as good for
 any $$\alpha$$ value, thus instead of having a single best solution now we have a continuous. Where is the problem then? 
 Notice that due to this issue the covariance matrix is degenerate and we cannot obtain its inverse, there is not a 
-single solution translates into  the non invertivility of the covariance matrix:
+single solution translates into  the non invertibility of the covariance matrix:
 
 $$ \Sigma = \left(\begin{array}{cc}
 1&1\\
@@ -188,17 +188,62 @@ $$ \Sigma + \lambda \mathbb{I} = \left(\begin{array}{cc}
 1&1+\lambda
 \end{array} \right); \text{Det}\left(\Sigma\right) = (1+lambda)^2 - 1 \neq 0 \text{ for } \lambda \neq 0.$$
 
+<center>
+<figure>
+  <img src="{{ site.baseurl }}/images/post0/collinearity.jpg" >
+  <figcaption>
+  Figure 3: Scheme of the effects of regularization on regression with collinear variables. In purple the degenerate
+  line of solutions is shown. The red circles represents constant values the extra penalty of regularization,
+   the further away from the origin the higher the penalty. The new best set of parameters is drawn in blue.
+  </figcaption>
+</figure>
+</center> 
 
-
- 
- Notice that this loss is invariant under O(m) transformations of the coordinates x as we can always absorb the matrix
- with a redefinition of the weights:
+ Concerning the selection of variables, notice that this loss is invariant under O(m) transformations of
+ the coordinates x as we can always absorb the matrix with a redefinition of the weights
+  (scalar products of vectors are invariant under rotation and reflexions of the coordinate system):
+  
  $$ x \rightarrow \tilde{x} = x P^t; \;\;\; w \rightarrow \tilde{w} = P w;$$
  
  $$E_{(x,y)}[(y - x P^t P w)^2] + \lambda w^t P^t P w = E_{(x,y)}[(y - (x P^t) (P w) )^2] + \lambda (P w)^t (P w) =
- E_{(x,y)}[(y - \tilde{x}\tilde{w} )^2] + \lambda \tilde{w}^t\tilde{w}.$$
+ E_{(x,y)}[(y - \tilde{x}\tilde{w} )^2] + \lambda \tilde{w}^t\tilde{w}.   \ref$$
  
- We can always
+ If we choose $$P$$ to be that of PCA, as the new variables $$\tilde{x}$$ are linearly independent
+ the covariance matrix is diagonal, thus (\ref{w_analytical}) can be written as:
+ 
+ $$ \tilde{w}_i = \frac{1}{D_{ii} + \lambda\right)^{-1}\frac{\tilde{X}^tY}{n} \tag{5} \label{aux1}$$
+ 
+ Due to that linear independency we can also rewrite the numerator as,
+ 
+ $$E\left[\tilde{x}^t y \right] = E\left[\tilde{x}^t \left( \tilde{x}\tilde{w}^{\lambda = 0} + \epsilon \right) \right] =
+  E\left[\tilde{x}^t\tilde{x}\right]\tilde{w}^{\lambda = 0} = D \tilde{w}^{\lambda = 0}, \tag{6} \label{aux2}$$
+  
+  where $$\tilde{w}^{\lambda = 0}$$ is the solution without regularization. Finally, using 
+  (\ref{aux2}) in (\ref{aux1}), we derive the expression that clarifies the effects of $$l_2$$:
+  
+  $$ \tilde{w}_i = \frac{D_{ii}}{D_{ii} + \lambda} \tilde{w}^{\lambda = 0} \tag{7} \label{final}$$
+  
+  
+  The $$l_2$$ regularization acts as a high pass filter on the PCA coordinates. The principal components with 
+  higher variance $$D_ii / \lambda \gg 1$$ are  not affected by the filter
+   $$\tilde{w}_i \simeq \tilde{w}^{\lambda = 0} $$. On the other hand, those principal components with a small variance,
+ that are typically associated with noise, are penalized by the prefactor $$ \tilde{w}_i \simeq 0$$. 
+ The parameter $$\lambda$$ controls at which variance this filter starts to have influence, see Fig. 4.
+<center>
+<figure>
+  <img src="{{ site.baseurl }}/images/post0/highpass.jpg" >
+  <figcaption>
+  Figure 4: This plot shows the value of the prefactor, which is the usual of a high pass filter. 
+  </figcaption>
+</figure>
+</center>  
+ 
+There is another way of understanding what does $$l_2$$ regularization from a Bayesian point of view,
+ which is just an exponential prior on the weights $$w_i$$, 
+see [this lecture](https://www.youtube.com/watch?v=_21o_ylL0q4) for a nice discussion.
+  
+ 
+ 
  
  
  
@@ -211,15 +256,3 @@ $$ \Sigma + \lambda \mathbb{I} = \left(\begin{array}{cc}
 
 
 
- 
- The Principal Components Analysis (PCA) algorithm 
-
-
-Next you can update your site name, avatar and other options using the _config.yml file in the root of your repository (shown below).
-
-![_config.yml]({{ site.baseurl }}/images/config.png)
-
-The easiest way to make your first post is to edit this one.
- Go into /_posts/ and update the Hello World markdown file. 
- For more instructions head over to the 
- [Jekyll Now repository](https://github.com/barryclark/jekyll-now) on GitHub.
