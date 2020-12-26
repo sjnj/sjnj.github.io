@@ -4,7 +4,7 @@ title: A rotation away from understanding Ridge regression
 ---
 
 In this post we will understand the ridge regression, i.e. linear regression with $$l_2$$  regularization.
-This task is simplified if we change our features performing a PCA rotation into the principal components coordinate 
+This task is simplified if we change our features by performing a PCA rotation into the principal components coordinate 
 system.
 
 ### Notation:
@@ -45,7 +45,7 @@ $$E[x_i] = 0;\;\; \forall i \tag{1} \label{cond1}$$
 
 $$Var[x_i] \equiv E[(x_i - E[x_i])^2] = E[x_i^2] = 1;\;\; \forall i  \tag{2} \label{cond2}$$
 
-We can always find a transformation such that those conditions are approximately satisfy:
+We can always find a transformation such that those conditions are approximately satisfied:
 
 $$ x_i \longrightarrow \frac{x_i - \overline{x}_i}{\sigma_i};$$
 
@@ -63,15 +63,15 @@ E[x_2 x_1] & E[x_2^2] & \cdots \\
 E[x_2 x_1] & 1 & \cdots \\
 \vdots & \vdots & \ddots  \end{array} \right)_{m \times m}$$
 
-We can quickly gain familiarity with what the covariance matrix represent by studying extreme cases:
+We can quickly gain familiarity with what the covariance matrix represents by studying extreme cases:
 
-* $$\bf{x_2 = \pm x_1}$$ **:** Suppose that we have include a copy of the $$x_1$$ up to a sign in the dataset without
+* $$\bf{x_2 = \pm x_1}$$ **:** Suppose that we have included a copy of the $$x_1$$ up to a sign in the dataset without
  realising. In that case, $$E[x_2 x_1] = \pm E[x_1^2] = \pm 1$$. Notice how this maximum is fixed thanks to condition 
- (\ref{cond2}); for example, if we had the same variables in different units
+ (\ref{cond2}); for example, if we had the same variables but in different units
   (say $$[x_1]=m$$ and $$[x_2] = km$$),  the result would be
    $$E[x_1 x_2] = 0.001 \cdot E[x_1^{\small normalized} x_2^{\small normalized}] = 0.001$$
 
-* $$\bf{x_2 \perp x_1}$$**:** if x_2 is independent of $$x_1$$, whatever the value of $$x_2$$, $$x_1$$ will follow the
+* $$\bf{x_2 \perp x_1}$$**:** if x_2 is independent of $$x_1$$, whatever the value of $$x_2$$, $$x_1$$ follows the
  same distribution, i.e. $$E[x_1x_2] = E[x_1\vert x2] E[x_2] = E[x_1]E[x_2] = 0$$. Notice how this minimum is set to
   zero thanks to condition (\ref{cond1}).
 
@@ -99,15 +99,15 @@ As the covariance matrix is symmetric, $$x^t x = (x^t x)^t$$, it can always be d
 $$E[x^t x] \simeq \frac{1}{n-1} X^t X = P^t D P$$
 
 The change of basis matrix, $$P$$, satisfies $$P^t P =\mathbb{I}$$, thus it is a matrix representation of the
- orthogonal group $$O(m)$$, this is the group of rotations, reflexions and combinations of them. Due to this, we can see 
- the matrix as a rotation in a m dimensional space from the dataset coordinates (variables) into a new system of
-  coordinates in which the coordinates are <span style="color:red">linearly</span> independent.
+ orthogonal group $$O(m)$$, which is the group of rotations, reflexions and combinations of them. Due to this fact, 
+ we can see the matrix as a rotation in a m dimensional space from the dataset coordinates (variables) into a new 
+ system of coordinates in which the coordinates are <span style="color:red">linearly</span> independent.
   
  $$ P(P^t D P)P^t = E[ P x^t x P^t ] \Rightarrow D = E[ (x P^t)^t (x P^t) ] = E[ \tilde{x}^t \tilde{x}]$$ 
  
  In the new coordinates (variables), $$\tilde{x}$$, the covariance matrix is diagonal. This transformation is usually 
  called Principal Components Analysis (PCA). In order to understand what happens when this transformation is done,
-  let us consider as an example the same dataset of the notation. Both weight and height are usually correlated, 
+  let us consider as an example the same dataset of the notation section. Both weight and height are usually correlated, 
   though not perfectly, see Fig. 2. The old axis are rotated such that the first principal component
    captures that linear correlation.
    
@@ -125,8 +125,8 @@ linearly correlates with many variables of the dataset, whereas those with a sma
 would be associated to noise.
 
 Finally, notice that higher variance variables just summarize more information of the dataset, but that does not 
-mean that the would be more useful in every problem. In our example of Fig. 2, the first component may represent well
- how big is a person and would be the most useful if we want to predict the length of a person arm, however it would be
+mean that they would be more useful always. In our example of Fig. 2, the first component may represent well
+ how big a person is  and would be the most useful variable if we want to predict the length of a person arm, however it would be
  negligible in comparison with the second component for predicting obesity.
  
  
@@ -137,10 +137,10 @@ mean that the would be more useful in every problem. In our example of Fig. 2, t
   
   $$ y = x \cdot w + \epsilon;\;\;\; \epsilon \sim \mathcal{N}(0, \sigma), \tag{3} \label{ridge_loss}$$
   
- where $$\epsilon$$ is the noise and $$w_{m \times 1}$$ the weights associated to the m variables $$x_{1 \times m}$$. 
+ where $$\epsilon$$ is the irreducible noise and $$w_{m \times 1}$$ the weights associated to the m variables $$x_{1 \times m}$$. 
  In the standard linear regression these weights are usually estimated using the least squares estimator. In the case of
- Ridge regression they are estimated using the same estimator but the possibility of having high valued weights is
- penalized with a square weight penalty,
+ Ridge regression they are estimated in the same way but the possibility of having highly valued weights is
+ penalized via a square weight penalty,
  
  $$\text{arg min}_w E_{(x,y)}[(y - x w)^2] + \lambda w^t w  \simeq
   \frac{1}{n} \left(Y - X w\right)^t\left(Y - X w\right)+ \lambda w^t w $$
@@ -154,7 +154,7 @@ mean that the would be more useful in every problem. In our example of Fig. 2, t
  
  The Ridge regression has two main use cases:
  
- * **Collinearity:** though collinearity of variables ($$E[x_i x_j] \simeq 1$$ for some i,j) is not a problem for inference 
+ * **Collinearity:** though multicollinearity of variables ($$E[x_i x_j] \simeq 1$$ for some i,j) is not a problem for inference 
  as we will see soon, it is a problem for numerical methods convergence. The $$l_2$$ regularization can fix that as it 
  adds $$\lambda$$ to the null eigenvalues of $$X^tX$$ alleviating the inverse computation at (\ref{w_analytical}). 
  However, as we will see soon this method must not be used for causal inference as it induces a bias of evenly balancing 
@@ -186,7 +186,7 @@ But, How can possibly regularization help with this? As it induces a new penalty
 $$ \Sigma + \lambda \mathbb{I} = \left(\begin{array}{cc}
 1 + \lambda&1\\
 1&1+\lambda
-\end{array} \right); \text{Det}\left(\Sigma\right) = (1+lambda)^2 - 1 \neq 0 \text{ for } \lambda \neq 0.$$
+\end{array} \right); \text{Det}\left(\Sigma\right) = (1+\lambda)^2 - 1 \neq 0 \text{ for } \lambda \neq 0.$$
 
 <center>
 <figure>
@@ -205,13 +205,13 @@ $$ \Sigma + \lambda \mathbb{I} = \left(\begin{array}{cc}
   
  $$ x \rightarrow \tilde{x} = x P^t; \;\;\; w \rightarrow \tilde{w} = P w;$$
  
- $$E_{(x,y)}[(y - x P^t P w)^2] + \lambda w^t P^t P w = E_{(x,y)}[(y - (x P^t) (P w) )^2] + \lambda (P w)^t (P w) =
- E_{(x,y)}[(y - \tilde{x}\tilde{w} )^2] + \lambda \tilde{w}^t\tilde{w}.   \ref$$
+ $$E_{(x,y)}\left[(y - x P^t P w)^2 \right] + \lambda w^t P^t P w = E_{(x,y)}\left[(y - (x P^t) (P w) )^2 \right] 
+ + \lambda (P w)^t (P w) = E_{(x,y)}\left[(y - \tilde{x}\tilde{w} )^2\right] + \lambda \tilde{w}^t\tilde{w}. $$
  
  If we choose $$P$$ to be that of PCA, as the new variables $$\tilde{x}$$ are linearly independent
  the covariance matrix is diagonal, thus (\ref{w_analytical}) can be written as:
  
- $$ \tilde{w}_i = \frac{1}{D_{ii} + \lambda\right)^{-1}\frac{\tilde{X}^tY}{n} \tag{5} \label{aux1}$$
+ $$ \tilde{w}_i = \frac{1}{(n-1)D_{ii} + \lambda n}\tilde{X}^tY} \tag{5} \label{aux1}$$
  
  Due to that linear independency we can also rewrite the numerator as,
  
@@ -221,11 +221,12 @@ $$ \Sigma + \lambda \mathbb{I} = \left(\begin{array}{cc}
   where $$\tilde{w}^{\lambda = 0}$$ is the solution without regularization. Finally, using 
   (\ref{aux2}) in (\ref{aux1}), we derive the expression that clarifies the effects of $$l_2$$:
   
-  $$ \tilde{w}_i = \frac{D_{ii}}{D_{ii} + \lambda} \tilde{w}^{\lambda = 0} \tag{7} \label{final}$$
+  $$ \tilde{w}_i = \frac{D_{ii}}{D_{ii} + \lambda \frac{n}{n-1}} \tilde{w}^{\lambda = 0} \simeq
+   \frac{D_{ii}}{D_{ii} + \lambda} \tilde{w}^{\lambda = 0}  \tag{7} \label{final}$$
   
   
   The $$l_2$$ regularization acts as a high pass filter on the PCA coordinates. The principal components with 
-  higher variance $$D_ii / \lambda \gg 1$$ are  not affected by the filter
+  higher variance $$D_{ii} / \lambda \gg 1$$ are  not affected by the filter
    $$\tilde{w}_i \simeq \tilde{w}^{\lambda = 0} $$. On the other hand, those principal components with a small variance,
  that are typically associated with noise, are penalized by the prefactor $$ \tilde{w}_i \simeq 0$$. 
  The parameter $$\lambda$$ controls at which variance this filter starts to have influence, see Fig. 4.
